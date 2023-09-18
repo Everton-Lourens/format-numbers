@@ -165,3 +165,67 @@ function extractNumbersToInt(str) {
         return numeroInteiro;
     }
 }
+
+
+const formatNumberFlavor = (event) => {
+    if (isModifierKey(event)) {
+        return;
+    }
+    const checkNumber = event.target.value.split('');
+    if (checkNumber.length === 0) {
+        event.target.value = 0;
+    } else {
+        const inputNumber = event.target.value
+        let numberFlavor = extractNumbersToInt(inputNumber);
+        if (inputNumber > 15) {
+            numberFlavor = 15;
+        }
+        event.target.value = numberFlavor;
+    }
+};
+
+const numberFlavor = document.getElementById('input-number-flavor');
+if (numberFlavor) {
+    numberFlavor.addEventListener('keydown', enforceFormat);
+    numberFlavor.addEventListener('input', formatNumberFlavor);
+}
+
+
+const formatTimeDelivery = (event) => {
+    if (isModifierKey(event)) {
+        return;
+    }
+    const checkNumber = event.target.value.split('');
+    if (checkNumber.length === 0) {
+        event.target.value = '45 minutos';
+    } else {
+        const inputSplit = event.target.value.split(' ');
+        if (inputSplit[1].includes('minutos')) {
+            const inputNumber = event.target.value
+            const numero = extractNumbersToInt(inputNumber);
+            let time = numero;
+            if (numero > 240) {
+                time = 240;
+            }
+            event.target.value = `${time} minutos`;
+        } else if (inputSplit[1] === 'minuto') {
+            const splitNumber = inputSplit[0].split('');
+            splitNumber.pop();
+            let numberFormated = splitNumber.join('');
+            numberFormated ? numberFormated = numberFormated : numberFormated = '0';
+            console.log('numberFormated:::::::::::>>>>>>>>>', numberFormated);
+            const numero = extractNumbersToInt(numberFormated);
+            let time = numero;
+            if (numero > 240) {
+                time = 240;
+            }
+            event.target.value = `${time} minutos`;
+        }
+    }
+};
+
+const numberTimeDelivery = document.getElementById('input-time-delivery');
+if (numberTimeDelivery) {
+    numberTimeDelivery.addEventListener('keydown', enforceFormat);
+    numberTimeDelivery.addEventListener('input', formatTimeDelivery);
+}
