@@ -1,3 +1,8 @@
+const formatMoneytoInt = (number) => {
+    number = number.replace(/[^0-9,.]/g, '').replace(/,00$/, '').replace('.', '').replace(',', '');
+    return parseInt(number, 10);
+}
+
 const isNumericInput = (event) => {
     const key = event.keyCode;
     return ((key >= 48 && key <= 57) || // Allow number line
@@ -118,3 +123,4 @@ if (priceWithoutCents) {
     priceWithoutCents.addEventListener('keydown', enforceFormat);
     priceWithoutCents.addEventListener('input', formatTensToBRL);
 }
+
