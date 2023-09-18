@@ -145,3 +145,23 @@ function changeWords(input) {
     }
     return text.join(" "); // Isso junta todas as palavras num texto de novo, separadas por espaços.
 }
+
+
+function extractNumbersToInt(str) {
+    // Remove os acentos da string
+    const removerAcentos = (texto) => {
+        return texto
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/[^a-zA-Z0-9]/g, "");
+    };
+    // Remove os pontos e deixa apenas números
+    const numeros = removerAcentos(str).replace(/\D/g, "");
+    if (numeros.length >= 16) {
+        return 999999999999999
+    } else {
+        // Converte a string resultante em um número inteiro
+        const numeroInteiro = parseInt(numeros, 10);
+        return numeroInteiro;
+    }
+}
