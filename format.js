@@ -85,7 +85,6 @@ const formatTensToBRL = (event) => {
     }
     const checkNumber = event.target.value.split(',');
 
-    console.log('checkNumber:::::::::::>>>>>>>>>', checkNumber);
     if (checkNumber[0] === '') {
         event.target.value = '0,00';
     } else {
