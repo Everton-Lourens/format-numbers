@@ -84,17 +84,20 @@ const formatTensToBRL = (event) => {
         return;
     }
     const checkNumber = event.target.value.split(',');
+
+    console.log('checkNumber:::::::::::>>>>>>>>>', checkNumber);
     if (checkNumber[0] === '') {
         event.target.value = '0,00';
     } else {
-        const numberBackspace = checkNumber[1].length === 1;
+        //const numberBackspace = checkNumber[1]?.length === 1;
+        let numberBackspace = checkNumber[1] ? checkNumber[1]?.length === 1 : true;
         if (numberBackspace) {
             const input = event.target.value.split(',0');
 
-            if (input[0].length === 1) {
+            if (input[0]?.length === 1) {
                 event.target.value = `0,00`;
             } else {
-                const numberSplited = input[0].replace('.', '').replace(',', '').split('');
+                const numberSplited = input[0]?.replace('.', '').replace(',', '').split('');
                 numberSplited.pop();
                 const joinAllNumber = numberSplited.join('');
                 const newNumber = parseInt(joinAllNumber + '00', 10) / 100;
@@ -103,13 +106,13 @@ const formatTensToBRL = (event) => {
             }
         } else {
             const input = event.target.value.split(',00');
-            if (input[0].length < 7) {
-                const numberJoin = input[0].replace('.', '').replace(',', '') + input[1];
+            if (input[0]?.length < 7) {
+                const numberJoin = input[0]?.replace('.', '').replace(',', '') + input[1];
                 const newNumber = parseInt(numberJoin + '00', 10) / 100;
                 const numberFormated = newNumber.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                 event.target.value = numberFormated.replace('R$ ', '');
             } else {
-                const numberJoin = input[0].replace('.', '').replace(',', '');
+                const numberJoin = input[0]?.replace('.', '').replace(',', '');
                 const newNumber = parseInt(numberJoin + '00', 10) / 100;
                 const numberFormated = newNumber.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
                 event.target.value = numberFormated.replace('R$ ', '');
@@ -200,7 +203,7 @@ const formatTimeDelivery = (event) => {
         event.target.value = '45 minutos';
     } else {
         const inputSplit = event.target.value.split(' ');
-        if (inputSplit[1].includes('minutos')) {
+        if (inputSplit[1]?.includes('minutos')) {
             const inputNumber = event.target.value
             const numero = extractNumbersToInt(inputNumber);
             let time = numero;
@@ -209,7 +212,7 @@ const formatTimeDelivery = (event) => {
             }
             event.target.value = `${time} minutos`;
         } else if (inputSplit[1] === 'minuto') {
-            const splitNumber = inputSplit[0].split('');
+            const splitNumber = inputSplit[0]?.split('');
             splitNumber.pop();
             let numberFormated = splitNumber.join('');
             numberFormated ? numberFormated = numberFormated : numberFormated = '0';
