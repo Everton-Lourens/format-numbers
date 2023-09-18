@@ -213,7 +213,6 @@ const formatTimeDelivery = (event) => {
             splitNumber.pop();
             let numberFormated = splitNumber.join('');
             numberFormated ? numberFormated = numberFormated : numberFormated = '0';
-            console.log('numberFormated:::::::::::>>>>>>>>>', numberFormated);
             const numero = extractNumbersToInt(numberFormated);
             let time = numero;
             if (numero > 240) {
