@@ -124,3 +124,24 @@ if (priceWithoutCents) {
     priceWithoutCents.addEventListener('input', formatTensToBRL);
 }
 
+
+// Filtro de palavrões
+// Fonte: https://pt.stackoverflow.com/questions/23925/filtro-de-palavras
+var badWords = { // Isso vai ser nosso dicionário.
+    "teste": "t****",
+    "teste1": "t*****",
+    "oteste2": "o******",
+    "Supercaligrafilistiespialidocio": "S******************************"
+    /* etc, etc...*/
+}
+
+function changeWords(input) {
+    var text = input.split(" "); // Isso pega a string de input e quebra em palavras separadas por espaços;
+    for (var i = 0; i < text.length; i++) {
+        var word = text[i];
+        if (badWords[word]) { // Essa é a sintaxe pra ver se algo está no dicionário
+            text[i] = badWords[word];
+        }
+    }
+    return text.join(" "); // Isso junta todas as palavras num texto de novo, separadas por espaços.
+}
