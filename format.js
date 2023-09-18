@@ -53,9 +53,6 @@ if (inputElement) {
 }
 
 
-
-
-
 const formatToCurrency = (event) => {
     if (isModifierKey(event)) {
         return;
@@ -70,8 +67,51 @@ const formatToCurrency = (event) => {
     }
 };
 
-const inputElement2 = document.getElementById('priceNumber');
-if (inputElement2) {
-    inputElement2.addEventListener('keydown', enforceFormat);
-    inputElement2.addEventListener('input', formatToCurrency);
+const priceNumber = document.getElementById('priceNumber');
+if (priceNumber) {
+    priceNumber.addEventListener('keydown', enforceFormat);
+    priceNumber.addEventListener('input', formatToCurrency);
+}
+
+
+const formatTensToBRL = (event) => {
+    if (isModifierKey(event)) {
+        return;
+    }
+    const checkNumber = event.target.value.split(',');
+    const numberBackspace = checkNumber[1].length === 1;
+
+    if (numberBackspace) {
+        const input = event.target.value.split(',0');
+
+        if (input[0].length === 1) {
+            event.target.value = `0,00`;
+        } else {
+            const numberSplited = input[0].replace('.', '').replace(',', '').split('');
+            numberSplited.pop();
+            const joinAllNumber = numberSplited.join('');
+            const newNumber = parseInt(joinAllNumber + '00', 10) / 100;
+            const numberFormated = newNumber.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            event.target.value = numberFormated.replace('R$ ', '');
+        }
+    } else {
+        const input = event.target.value.split(',00');
+        if (input[0].length < 7) {
+            const numberJoin = input[0].replace('.', '').replace(',', '') + input[1];
+            const newNumber = parseInt(numberJoin + '00', 10) / 100;
+            const numberFormated = newNumber.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            event.target.value = numberFormated.replace('R$ ', '');
+        } else {
+            const numberJoin = input[0].replace('.', '').replace(',', '');
+            const newNumber = parseInt(numberJoin + '00', 10) / 100;
+            const numberFormated = newNumber.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            event.target.value = numberFormated.replace('R$ ', '');
+        }
+    }
+};
+
+const priceWithoutCents = document.getElementById('input-price');
+if (priceWithoutCents) {
+    priceWithoutCents.addEventListener('keydown', enforceFormat);
+    priceWithoutCents.addEventListener('input', formatTensToBRL);
 }
