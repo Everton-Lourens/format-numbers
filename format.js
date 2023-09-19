@@ -225,6 +225,14 @@ const formatTimeDelivery = (event) => {
                 time = 240;
             }
             event.target.value = `${time} minutos`;
+        } else {
+            const inputNumber = event.target.value
+            const numero = extractNumbersToInt(inputNumber);
+            let time = numero;
+            if (numero > 240) {
+                time = 240;
+            }
+            event.target.value = `${time} minutos`;
         }
     }
 };
