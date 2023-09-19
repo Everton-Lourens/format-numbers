@@ -198,7 +198,8 @@ const formatTimeDelivery = (event) => {
         return;
     }
     const checkNumber = event.target.value.split('');
-    if (checkNumber.length === 0) {
+
+    if (checkNumber.length === 0 || checkNumber.length === 1) {
         event.target.value = '45 minutos';
     } else {
         const inputSplit = event.target.value.split(' ');
