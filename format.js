@@ -199,8 +199,11 @@ const formatTimeDelivery = (event) => {
     }
     const checkNumber = event.target.value.split('');
 
-    if (checkNumber.length === 0 || checkNumber.length === 1) {
+    if (checkNumber.length === 0) {
         event.target.value = '45 minutos';
+    } else if (checkNumber.length === 1) {
+        const oneNumber = checkNumber[0];
+        event.target.value = `${oneNumber} minutos`;
     } else {
         const inputSplit = event.target.value.split(' ');
         if (inputSplit[1]?.includes('minutos')) {
