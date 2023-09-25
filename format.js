@@ -208,7 +208,9 @@ const formatTimeDelivery = (event) => {
         const inputSplit = event.target.value.split(' ');
         if (inputSplit[1]?.includes('minutos')) {
             const inputNumber = event.target.value
-            const numero = extractNumbersToInt(inputNumber);
+            let numero = extractNumbersToInt(inputNumber);
+            isNaN(numero) ? numero = 0 : numero = numero;
+
             let time = numero;
             if (numero > 240) {
                 time = 240;
@@ -227,7 +229,9 @@ const formatTimeDelivery = (event) => {
             event.target.value = `${time} minutos`;
         } else {
             const inputNumber = event.target.value
-            const numero = extractNumbersToInt(inputNumber);
+            let numero = extractNumbersToInt(inputNumber);
+            isNaN(numero) ? numero = 0 : numero = numero;
+            
             let time = numero;
             if (numero > 240) {
                 time = 240;
