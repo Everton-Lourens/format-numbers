@@ -246,3 +246,65 @@ if (numberTimeDelivery) {
     numberTimeDelivery.addEventListener('keydown', enforceFormat);
     numberTimeDelivery.addEventListener('input', formatTimeDelivery);
 }
+
+
+
+const formatToDate = (event) => {
+    if (isModifierKey(event)) {
+        return;
+    }
+
+    const input = event.target.value.replace(/\D/g, '').substring(0, 8); // First eleven digits of input only
+    const day = input.substring(0, 2);
+    const month = input.substring(2, 4);
+    const year = input.substring(4, 8);
+
+
+    if (input.length >= 8) {
+        event.target.value = `${day}/${month}/${year}`;
+        if (!isDateOfBirthValid(`${day}/${month}/${year}`)) {
+            event.target.value = '';
+            return alert('Data de Nascimento inválida! ' + `${day}/${month}/${year}`);
+        }
+    } else if (input.length > 4) {
+        event.target.value = `${day}/${month}/${year}`;
+    } else if (input.length > 2) {
+        event.target.value = `${day}/${month}`;
+    } else if (input.length > 0) {
+        event.target.value = `${day}`;
+    }
+};
+
+const inputDate = document.getElementById('input-date');
+if (inputDate) {
+    inputDate.addEventListener('keydown', enforceFormat);
+    inputDate.addEventListener('input', formatToDate);
+}
+
+
+function isDateOfBirthValid(dateStr) {
+    if (dateStr.length !== 10) {
+        return false;
+    }
+    const inputDate = dateStr.split('/');
+    const newInput = `${inputDate[2]}-${inputDate[1]}-${inputDate[0]}`; // Nova string com o formato 
+
+    // Converta a string em um objeto de data.
+    const date = new Date(newInput);
+
+    // Verifique se o mês e o dia estão dentro dos limites aceitáveis.
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // O mês é base 0, então adicionamos 1.
+    const day = date.getDate();
+
+    if (
+        year < 1900 || // Você pode ajustar o limite inferior se necessário.
+        year > new Date().getFullYear() || // Ano não pode ser no futuro.
+        month < 1 || month > 12 || // Mês deve estar entre 1 e 12.
+        day < 1 || day > 31
+    ) {
+        return false; // Qualquer valor fora desses limites é inválido.
+    }
+
+    return !isNaN(date);
+}
