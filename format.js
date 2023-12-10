@@ -31,12 +31,11 @@ const enforceFormat = (event) => {
 
 const formatToBrPhone = (phone) => {
     const splitNumber = phone.replace(/\D/g, '').split('');
-    if (splitNumber.length === 12) {
+    
+    if (splitNumber.length === 12)
         splitNumber.splice(4, 0, '9');
-        phone = splitNumber.join('');
-    } else {
-        phone = splitNumber.join('');
-    }
+    phone = splitNumber.join('');
+    
     const areaBr = phone.substring(0, 2);
     const areaCode = phone.substring(2, 4);
     const nineDigit = phone.substring(5, 4);
