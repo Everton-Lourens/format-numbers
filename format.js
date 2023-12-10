@@ -29,10 +29,34 @@ const enforceFormat = (event) => {
     }
 };
 
-const formatToPhone = (event) => {
-    if (isModifierKey(event)) {
-        return;
+const formatToBrPhone = (phone) => {
+    const splitNumber = phone.replace(/\D/g, '').split('');
+    if (splitNumber.length === 12) {
+        splitNumber.splice(4, 0, '9');
+        phone = splitNumber.join('');
+    } else {
+        phone = splitNumber.join('');
     }
+    const areaBr = phone.substring(0, 2);
+    const areaCode = phone.substring(2, 4);
+    const nineDigit = phone.substring(5, 4);
+    const middle = phone.substring(5, 9);
+    const last = phone.substring(9, 13);
+
+    if (phone.length === 13)
+        return `+${areaBr} (${areaCode}) ${nineDigit} ${middle}-${last}`;
+
+    return '';
+};
+
+// Exemplo de uso:
+const phoneNumber = '557112345678';
+const formattedPhoneNumber = formatToPhone(phoneNumber);
+console.log(formattedPhoneNumber);
+
+const formatPhoneWithKeyboard = (event) => {
+    if (isModifierKey(event))
+        return;
 
     const input = event.target.value.replace(/\D/g, '').substring(0, 11); // First eleven digits of input only
     const areaCode = input.substring(0, 2);
@@ -59,9 +83,8 @@ if (inputElement) {
 
 
 const formatToCurrency = (event) => {
-    if (isModifierKey(event)) {
+    if (isModifierKey(event))
         return;
-    }
 
     const input = event.target.value.replace(/[^\d]/g, ''); // Remove all non-numeric characters
     if (input === '') {
@@ -80,9 +103,9 @@ if (priceNumber) {
 
 
 const formatTensToBRL = (event) => {
-    if (isModifierKey(event)) {
+    if (isModifierKey(event)) 
         return;
-    }
+    
     const checkNumber = event.target.value.split(',');
 
     if (checkNumber[0] === '') {
